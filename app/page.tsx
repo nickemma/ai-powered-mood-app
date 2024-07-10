@@ -1,6 +1,10 @@
+import { auth } from '@clerk/nextjs/server'
 import Link from 'next/link'
 
-export default function Home() {
+export default async function Home() {
+  const { userId } = await auth()
+  let href = userId ? '/journal' : '/new-user'
+
   return (
     <section className="w-screen h-screen bg-black flex justify-center items-center text-white">
       <div className="w-full max-w-[600px] max-auto">
@@ -12,7 +16,7 @@ export default function Home() {
           well-being and take steps towards a happier, healthier life.
         </p>
         <div className="transition-all">
-          <Link href="/journal">
+          <Link href={href}>
             <button className="bg-blue-600 mx-1 px-2 py-2 rounded-lg text-base hover:bg-blue-800 transition-all xs:px-4 xs:py-2 xs:text-xl">
               Get Started
             </button>
